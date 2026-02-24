@@ -3,20 +3,19 @@
 <p align="center">
   <img src="https://streak-stats.demolab.com?user=utkirurazov001-pixel&theme=tokyonight&hide_border=true" />
 </p>
+
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=utkirurazov001-pixel&show_icons=true&theme=tokyonight&hide_border=true" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=utkirurazov001-pixel&theme=tokyonight" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=utkirurazov001-pixel&layout=compact&theme=tokyonight&hide_border=true" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=utkirurazov001-pixel&theme=tokyonight" />
 </p>
-
 ---
 
 🚀 Software Developer | Telegram Bot Developer  
 📍 Uzbekistan  
 
----
 
 ## 🔥 About Me
 
@@ -26,7 +25,6 @@
 - ☁️ Cloud Deployment (Render)  
 - 💡 Automation & AI Solutions  
 
----
 
 ## 🛠 Tech Stack
 
@@ -37,7 +35,6 @@
 - Render  
 - REST API  
 
----
 
 ## 🚖 Featured Project
 
@@ -49,6 +46,5 @@ AI-powered Telegram bot for taxi service automation.
 - Cloud deployed  
 - Production ready  
 
----
 
 ⭐ Always building. Always improving.
