@@ -1,4 +1,8 @@
-# 👋 Assalomu alaykum, men Utkir Urazov
+<h1 align="center">👋 Assalomu alaykum, men Utkir Urazov</h1>
+
+<h3 align="center">
+Python Backend Developer | Telegram Bot Engineer | AI Enthusiast
+</h3>
 
 <p align="center">
   <img src="https://streak-stats.demolab.com?user=utkirurazov001-pixel&theme=tokyonight&hide_border=true" />
