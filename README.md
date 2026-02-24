@@ -20,7 +20,6 @@
 - ☁️ Cloud Deployment (Render)  
 - 💡 Automation & AI Solutions  
 
-
 ## 🛠 Tech Stack
 
 - Python
