@@ -1,16 +1,35 @@
-## Hi there 👋
+# 👋 Assalomu alaykum, men Utkir Urazov
 
-<!--
-**utkirurazov001-pixel/utkirurazov001-pixel** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+🚀 Software Developer | Telegram Bot Developer  
+📍 Uzbekistan  
 
-Here are some ideas to get you started:
+## 🔥 About Me
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- 🧠 Python Developer  
+- 🤖 Creator of ELGA TAXI Bot  
+- 🌐 Backend & API Integration  
+- ☁️ Cloud Deployment (Render)  
+- 💡 Automation & AI Solutions  
+
+
+## 🛠 Tech Stack
+
+- Python
+- Telegram Bot API
+- OpenAI API
+- Git & GitHub
+- Render
+- REST API
+
+
+## 🚖 Featured Project
+
+### ELGA TAXI Bot
+AI-powered Telegram bot for taxi service automation.
+
+- Smart responses  
+- Cloud deployed  
+- Production ready  
+
+
+⭐ Always building. Always improving.
