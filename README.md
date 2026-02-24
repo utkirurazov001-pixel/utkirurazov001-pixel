@@ -1,6 +1,7 @@
 # 👋 Assalomu alaykum, men Utkir Urazov
+
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=utkirurazov001-pixel&theme=tokyonight" />
+  <img src="https://streak-stats.demolab.com?user=utkirurazov001-pixel&theme=tokyonight&hide_border=true" />
 </p>
 🚀 Software Developer | Telegram Bot Developer  
 📍 Uzbekistan  
