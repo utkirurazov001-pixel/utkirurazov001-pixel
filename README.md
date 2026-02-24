@@ -73,4 +73,4 @@ AI-powered Telegram bot for taxi service automation.
 
 ## 🐍 Contribution Snake
 
-![snake animation](https://raw.githubusercontent.com/utkirurazov001-pixel/utkirurazov001-pixel/output/github-contribution-grid-snake.svg)
+![snake gif](https://raw.githubusercontent.com/utkirurazov001-pixel/utkirurazov001-pixel/output/github-contribution-grid-snake.svg)
