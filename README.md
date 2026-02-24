@@ -1,10 +1,6 @@
 # 👋 Assalomu alaykum, men Utkir Urazov
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=utkirurazov001-pixel&show_icons=true&theme=tokyonight" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=utkirurazov001-pixel&theme=tokyonight" />
+  <img src="https://streak-stats.demolab.com?user=utkirurazov001-pixel&theme=tokyonight" />
 </p>
 🚀 Software Developer | Telegram Bot Developer  
 📍 Uzbekistan  
