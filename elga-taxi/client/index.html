@@ -2,69 +2,187 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>ELGA TAXI</title>
-  <!-- Telegram Mini App SDK: initData, mavzu, tugmalar -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="app">
-    <header class="topbar">
-      <div class="logo">🚖 ELGA TAXI</div>
-      <div id="user-badge" class="user-badge"></div>
-    </header>
 
-    <main>
-      <!-- AI ovozli buyurtma -->
-      <section class="card voice-card">
-        <h2>🎙️ Ovozli buyurtma</h2>
-        <p class="hint">Tugmani bosib ushlab turing va ayting:<br>
-          <em>"Chilonzordan aeroportga hozir kerak"</em></p>
-        <button id="mic-btn" class="mic-btn">🎤 Bosib gapiring</button>
-        <div id="voice-status" class="voice-status"></div>
-        <div id="transcript" class="transcript"></div>
-      </section>
-
-      <!-- Buyurtma formasi -->
-      <section class="card">
-        <h2>📝 Buyurtma</h2>
-        <label>Qayerdan
-          <input id="from" type="text" placeholder="Masalan: Chilonzor 9-kvartal" />
-        </label>
-        <label>Qayerga
-          <input id="to" type="text" placeholder="Masalan: Aeroport" />
-        </label>
-        <label>Qachon
-          <input id="when" type="text" placeholder="Hozir / 30 daqiqadan keyin" />
-        </label>
-        <label>Izoh
-          <input id="notes" type="text" placeholder="Qo'shimcha (ixtiyoriy)" />
-        </label>
-        <button id="loc-btn" class="secondary-btn">📍 Joylashuvni aniqlash</button>
-        <button id="submit-btn" class="primary-btn">✅ Buyurtma berish</button>
-      </section>
-
-      <!-- Tariflar -->
-      <section class="card">
-        <h2>💰 Tariflar</h2>
-        <div class="tariffs">
-          <div class="tariff"><span>Ekonom</span><b>15 000</b></div>
-          <div class="tariff"><span>Komfort</span><b>22 000</b></div>
-          <div class="tariff"><span>Biznes</span><b>35 000</b></div>
-        </div>
-      </section>
-
-      <!-- Buyurtmalar tarixi -->
-      <section class="card">
-        <h2>🕓 Buyurtmalarim</h2>
-        <div id="orders" class="orders">Yuklanmoqda…</div>
-      </section>
-    </main>
-
-    <div id="toast" class="toast"></div>
+<!-- ============ 1. BOSH SAHIFA ============ -->
+<section class="screen active" id="screen-home">
+  <div class="appbar">
+    <div class="brand">
+      <div class="bolt">⚡</div>
+      <div class="name">ELGA<small>TAXI</small></div>
+    </div>
+    <button class="icon-btn plain" aria-label="Bildirishnomalar">🔔</button>
   </div>
 
-  <script src="app.js"></script>
+  <div class="profile-row">
+    <div class="avatar" id="home-avatar">🙂</div>
+    <div>
+      <div class="greet" id="home-greet">Salom! 👋</div>
+      <div class="loc">📍 <span id="home-loc">Manzil aniqlanmoqda…</span> ›</div>
+    </div>
+  </div>
+
+  <div class="map" id="home-map"></div>
+
+  <div class="card">
+    <h3>Qayerga boramiz?</h3>
+    <p class="sub">Manzilni ovoz bilan ayting</p>
+    <div class="wave-row">
+      <div class="wave"></div>
+      <button class="mic-fab" id="home-mic" aria-label="Ovozli buyurtma">🎤</button>
+      <div class="wave"></div>
+    </div>
+  </div>
+
+  <div class="saved-row">
+    <div class="saved" data-place="Uy">
+      <span class="ic">🏠</span><span class="t">Uy</span><span class="s">Saqlangan manzil</span>
+    </div>
+    <div class="saved" data-place="Ish">
+      <span class="ic">💼</span><span class="t">Ish</span><span class="s">Saqlangan manzil</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. OVOZLI BUYURTMA ============ -->
+<section class="screen voice-stage-bg" id="screen-voice">
+  <div class="appbar">
+    <button class="icon-btn" data-back="screen-home">‹</button>
+    <div class="title">Ovozli buyurtma</div>
+    <div style="width:42px"></div>
+  </div>
+
+  <div class="mic-stage">
+    <button class="mic-big" id="voice-mic">🎤</button>
+    <div class="voice-title" id="voice-title">Bosib gapiring</div>
+    <div class="voice-hint" id="voice-hint">Manzilingizni ovoz bilan ayting</div>
+  </div>
+
+  <div class="card flat">
+    <p class="sub" style="margin:0 0 12px">Misollar:</p>
+    <ul class="examples">
+      <li><span class="mi">🎙️</span> Tijorat bozoriga boraman</li>
+      <li><span class="mi">🎙️</span> Magic City, iltimos</li>
+      <li><span class="mi">🎙️</span> Aeroportga yetkazib bering</li>
+    </ul>
+  </div>
+  <div style="height:18px"></div>
+</section>
+
+<!-- ============ 3. TARIF TANLASH ============ -->
+<section class="screen" id="screen-tariff">
+  <div class="appbar">
+    <button class="icon-btn" data-back="screen-home">‹</button>
+    <div class="title">Tarif tanlang</div>
+    <div style="width:42px"></div>
+  </div>
+
+  <div class="card flat dest-card" id="tariff-dest">
+    <span class="dot"></span>
+    <div>
+      <div class="label">Manzil aniqlandi</div>
+      <div class="val" id="dest-val">—</div>
+    </div>
+    <span class="chev">›</span>
+  </div>
+
+  <div class="section-title">Tariflar ⓘ</div>
+  <div class="tariffs" id="tariffs">
+    <div class="tariff active" data-name="Tejamkor" data-price="13 500">
+      <div class="car">🚕</div><div class="nm">Tejamkor</div>
+      <div class="seats">👤 4 o'rinlik</div><div class="price">13 500 <small>so'm</small></div>
+    </div>
+    <div class="tariff" data-name="Comfort" data-price="17 500">
+      <div class="car">🚗</div><div class="nm">Comfort</div>
+      <div class="seats">👤 4 o'rinlik</div><div class="price">17 500 <small>so'm</small></div>
+    </div>
+    <div class="tariff" data-name="Business" data-price="21 500">
+      <div class="car">🚙</div><div class="nm">Business</div>
+      <div class="seats">👤 4 o'rinlik</div><div class="price">21 500 <small>so'm</small></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="pay-row" id="pay">
+      <div class="pay active" data-pay="Naqd"><span class="pic">💵</span>Naqd</div>
+      <div class="pay" data-pay="Karta"><span class="pic">💳</span>Karta</div>
+      <div class="pay" data-pay="Promokod"><span class="pic">🏷️</span>Promokod</div>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="confirm-btn">Buyurtmani tasdiqlash</button>
+  <div class="eta-note">Taxminiy yetib borish: 11–14 daqiqa</div>
+</section>
+
+<!-- ============ 4. HAYDOVCHI TOPILDI ============ -->
+<section class="screen" id="screen-driver">
+  <div class="appbar">
+    <button class="icon-btn" data-back="screen-home">‹</button>
+    <div class="title">Haydovchi topildi</div>
+    <div style="width:42px"></div>
+  </div>
+
+  <div class="map tall" id="driver-map"></div>
+
+  <div class="card">
+    <div class="driver-card">
+      <div class="av">🧑‍✈️</div>
+      <div>
+        <div class="nm" id="driver-name">Asadbek</div>
+        <div class="rate"><b id="driver-rate">4.9</b> ⭐</div>
+      </div>
+      <button class="call" id="driver-call">📞</button>
+    </div>
+    <div class="car-info">
+      <span class="em">🚗</span>
+      <div>
+        <div class="model" id="car-model">White Kia K5</div>
+      </div>
+      <span class="plate" id="car-plate">01 A 123 BC</span>
+    </div>
+    <div class="actions-2">
+      <div class="action"><span class="ic">💬</span>Xabar yozish</div>
+      <div class="action" id="driver-call-2"><span class="ic">📞</span>Qo'ng'iroq</div>
+    </div>
+  </div>
+
+  <button class="btn-ghost" id="cancel-btn">Buyurtmani bekor qilish</button>
+</section>
+
+<!-- ============ TARIX ============ -->
+<section class="screen" id="screen-history">
+  <div class="appbar"><div class="title" style="text-align:left;padding-left:6px">Tarix</div></div>
+  <div class="list" id="history-list"><div class="empty">Yuklanmoqda…</div></div>
+</section>
+
+<!-- ============ PROFIL ============ -->
+<section class="screen" id="screen-profile">
+  <div class="appbar"><div class="title" style="text-align:left;padding-left:6px">Profil</div></div>
+  <div class="profile-row" style="padding-top:18px">
+    <div class="avatar" id="profile-avatar">🙂</div>
+    <div>
+      <div class="greet" id="profile-name">Mehmon</div>
+      <div class="loc" id="profile-username">@—</div>
+    </div>
+  </div>
+  <div class="card flat"><p class="sub" style="margin:0">🚖 ELGA TAXI — AI ovozli taksi xizmati.<br>Telegram orqali, ro'yxatdan o'tmasdan.</p></div>
+</section>
+
+<!-- ============ PASTKI NAVIGATSIYA ============ -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="nav-item active" data-nav="screen-home"><span class="ic">🏠</span>Bosh sahifa</button>
+  <button class="nav-item" data-nav="screen-tariff"><span class="ic">📋</span>Buyurtmalar</button>
+  <button class="nav-item" data-nav="screen-history"><span class="ic">🕓</span>Tarix</button>
+  <button class="nav-item" data-nav="screen-profile"><span class="ic">👤</span>Profil</button>
+</nav>
+
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
 </body>
 </html>

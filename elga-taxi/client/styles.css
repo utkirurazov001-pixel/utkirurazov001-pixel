@@ -1,102 +1,261 @@
+/* ===== ELGA TAXI — dizayn tizimi (mockup bo'yicha) ===== */
 :root {
-  /* Telegram mavzu ranglari (JS orqali to'ldiriladi), zaxira qiymatlar bilan */
-  --bg: var(--tg-theme-bg-color, #ffffff);
-  --text: var(--tg-theme-text-color, #1a1a1a);
-  --hint: var(--tg-theme-hint-color, #8a8a8a);
-  --card: var(--tg-theme-secondary-bg-color, #f3f4f6);
-  --accent: var(--tg-theme-button-color, #2ca5e0);
-  --accent-text: var(--tg-theme-button-text-color, #ffffff);
+  --yellow: #FFC107;
+  --yellow-dark: #FFB300;
+  --yellow-soft: #FFF3CD;
+  --ink: #1A1D21;
+  --gray: #8A8F98;
+  --gray-light: #C7CCD1;
+  --bg: #FFFFFF;
+  --surface: #F5F6F8;
+  --card: #FFFFFF;
+  --line: #EDEFF2;
+  --danger: #E53935;
+  --green: #2BB673;
+  --shadow: 0 8px 28px rgba(20, 29, 41, 0.08);
+  --shadow-sm: 0 4px 14px rgba(20, 29, 41, 0.06);
+  --radius: 22px;
+  --radius-sm: 16px;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-body {
-  margin: 0;
-  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, "Segoe UI", "SF Pro Display", Roboto, sans-serif;
   background: var(--bg);
-  color: var(--text);
-  padding-bottom: env(safe-area-inset-bottom);
+  color: var(--ink);
+  overscroll-behavior: none;
 }
 
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  position: sticky;
-  top: 0;
-  background: var(--bg);
-  z-index: 10;
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+img { display: block; }
+
+/* ===== Ekran tizimi (SPA) ===== */
+.screen { display: none; min-height: 100vh; flex-direction: column; padding-bottom: 90px; }
+.screen.active { display: flex; animation: fade .25s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ===== Sarlavha paneli ===== */
+.appbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px 6px;
 }
-.logo { font-weight: 800; font-size: 20px; }
-.user-badge { font-size: 13px; color: var(--hint); }
+.appbar .title { font-size: 17px; font-weight: 700; flex: 1; text-align: center; }
+.icon-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--surface); display: grid; place-items: center;
+  font-size: 18px; color: var(--ink); flex-shrink: 0;
+}
+.icon-btn.plain { background: var(--bg); box-shadow: var(--shadow-sm); }
 
-main { padding: 0 16px 24px; display: flex; flex-direction: column; gap: 14px; }
+.brand { display: flex; align-items: center; gap: 8px; flex: 1; }
+.brand .bolt {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
+  display: grid; place-items: center; font-size: 18px;
+}
+.brand .name { font-weight: 800; font-size: 18px; line-height: 1; }
+.brand .name small { display: block; font-size: 11px; letter-spacing: 3px; color: var(--gray); font-weight: 700; }
 
+/* ===== Profil qatori ===== */
+.profile-row { display: flex; align-items: center; gap: 12px; padding: 8px 18px 14px; }
+.avatar {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: linear-gradient(135deg, #FFD54F, #FFB300);
+  display: grid; place-items: center; font-size: 22px; color: #fff; font-weight: 700;
+  flex-shrink: 0; overflow: hidden;
+}
+.profile-row .greet { font-size: 18px; font-weight: 700; }
+.profile-row .loc { font-size: 13px; color: var(--gray); display: flex; align-items: center; gap: 4px; }
+
+/* ===== Xarita ===== */
+.map {
+  position: relative; margin: 0 18px; height: 190px;
+  border-radius: var(--radius); overflow: hidden; background: #EAEDF0;
+}
+.map.tall { height: 320px; }
+.map svg { width: 100%; height: 100%; display: block; }
+.map .pin {
+  position: absolute; transform: translate(-50%, -50%);
+  font-size: 22px; filter: drop-shadow(0 4px 6px rgba(0,0,0,.2));
+}
+.map .me-dot {
+  position: absolute; width: 16px; height: 16px; border-radius: 50%;
+  background: #2D8CFF; border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(45,140,255,.25);
+  transform: translate(-50%, -50%);
+}
+.map .car-dot { position: absolute; font-size: 26px; transform: translate(-50%, -50%) rotate(-20deg); }
+.map .eta-bubble {
+  position: absolute; background: #fff; padding: 8px 12px; border-radius: 14px;
+  box-shadow: var(--shadow); font-size: 12px; font-weight: 600; transform: translate(-50%, -50%);
+  text-align: center; line-height: 1.2;
+}
+.map .eta-bubble b { display: block; font-size: 15px; }
+
+/* ===== Kartalar ===== */
 .card {
-  background: var(--card);
-  border-radius: 16px;
-  padding: 16px;
+  background: var(--card); margin: 14px 18px 0;
+  border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px;
 }
-.card h2 { margin: 0 0 10px; font-size: 16px; }
+.card.flat { box-shadow: var(--shadow-sm); }
+.card h3 { margin: 0 0 4px; font-size: 19px; font-weight: 700; }
+.card .sub { color: var(--gray); font-size: 13px; margin: 0 0 14px; }
 
-.hint { color: var(--hint); font-size: 13px; margin: 0 0 12px; }
-
-label { display: block; font-size: 13px; color: var(--hint); margin-bottom: 10px; }
-input {
-  width: 100%;
-  margin-top: 4px;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
+/* ===== Mic / to'lqin ===== */
+.wave-row { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.wave {
+  flex: 1; height: 36px;
+  background: repeating-linear-gradient(90deg, var(--yellow) 0 3px, transparent 3px 7px);
+  -webkit-mask: linear-gradient(#000 0 0); opacity: .5;
+  border-radius: 4px;
 }
-input:focus { outline: 2px solid var(--accent); }
-
-button { cursor: pointer; font-size: 15px; border: none; border-radius: 12px; }
-.primary-btn {
-  width: 100%; padding: 14px; margin-top: 6px;
-  background: var(--accent); color: var(--accent-text); font-weight: 700;
+.mic-fab {
+  width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
+  display: grid; place-items: center; font-size: 26px; color: var(--ink);
+  box-shadow: 0 8px 20px rgba(255,179,0,.45);
+  transition: transform .12s;
 }
-.secondary-btn {
-  width: 100%; padding: 12px; margin-bottom: 10px;
-  background: var(--bg); color: var(--text);
-}
+.mic-fab:active { transform: scale(.94); }
 
-/* Mikrofon */
-.voice-card { text-align: center; }
-.mic-btn {
-  width: 100%; padding: 18px;
-  background: var(--accent); color: var(--accent-text);
-  font-weight: 700; font-size: 16px;
-  transition: transform .1s, opacity .2s;
+/* Katta mic (ovozli ekran) */
+.mic-stage { display: grid; place-items: center; padding: 30px 0 10px; flex: 1; }
+.mic-big {
+  width: 140px; height: 140px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
+  display: grid; place-items: center; font-size: 52px; color: var(--ink);
+  box-shadow: 0 10px 30px rgba(255,179,0,.5); position: relative;
 }
-.mic-btn.recording { background: #e0392b; animation: pulse 1s infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .65; } }
-.voice-status { font-size: 13px; color: var(--hint); margin-top: 10px; min-height: 18px; }
-.transcript { font-size: 14px; margin-top: 8px; font-style: italic; }
+.mic-big::before, .mic-big::after {
+  content: ""; position: absolute; inset: -18px; border-radius: 50%;
+  border: 2px solid var(--yellow); opacity: 0;
+}
+.mic-big.live::before { animation: ring 1.8s ease-out infinite; }
+.mic-big.live::after { animation: ring 1.8s ease-out .9s infinite; }
+@keyframes ring { 0% { transform: scale(.8); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
+.voice-stage-bg {
+  background: radial-gradient(circle at 50% 40%, var(--yellow-soft), var(--bg) 70%);
+}
+.voice-title { text-align: center; font-size: 24px; font-weight: 800; margin: 22px 0 4px; }
+.voice-hint { text-align: center; color: var(--gray); font-size: 14px; }
 
-.tariffs { display: flex; gap: 10px; }
+/* Saqlangan manzillar */
+.saved-row { display: flex; gap: 12px; padding: 14px 18px 0; }
+.saved {
+  flex: 1; background: var(--card); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm); padding: 14px; display: flex; flex-direction: column; gap: 4px;
+}
+.saved .ic { font-size: 20px; }
+.saved .t { font-weight: 700; font-size: 15px; }
+.saved .s { color: var(--gray); font-size: 12px; }
+
+/* Misollar ro'yxati */
+.examples { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.examples li { display: flex; align-items: center; gap: 10px; color: var(--ink); font-size: 14px; }
+.examples li .mi { color: var(--yellow-dark); }
+
+/* ===== Tariflar ===== */
+.dest-card { display: flex; align-items: center; gap: 12px; }
+.dest-card .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.dest-card .label { font-size: 12px; color: var(--gray); }
+.dest-card .val { font-size: 15px; font-weight: 700; }
+.dest-card .chev { margin-left: auto; color: var(--gray-light); }
+
+.section-title { font-size: 16px; font-weight: 700; padding: 18px 18px 0; display: flex; align-items: center; gap: 6px; }
+
+.tariffs { display: flex; gap: 10px; padding: 12px 18px 0; }
 .tariff {
-  flex: 1; background: var(--bg); border-radius: 12px; padding: 12px;
-  text-align: center; display: flex; flex-direction: column; gap: 4px;
+  flex: 1; background: var(--card); border: 2px solid var(--line);
+  border-radius: var(--radius-sm); padding: 12px 8px; text-align: center; transition: .15s;
 }
-.tariff span { font-size: 12px; color: var(--hint); }
-.tariff b { font-size: 15px; }
+.tariff.active { border-color: var(--yellow); box-shadow: 0 6px 16px rgba(255,179,0,.2); }
+.tariff .car { height: 42px; display: grid; place-items: center; }
+.tariff .nm { font-weight: 700; font-size: 14px; margin-top: 4px; }
+.tariff .seats { font-size: 11px; color: var(--gray); margin: 2px 0 6px; }
+.tariff .price { font-weight: 800; font-size: 15px; }
+.tariff .price small { font-weight: 600; color: var(--gray); font-size: 11px; }
 
-.orders { display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
-.order-item {
-  background: var(--bg); border-radius: 10px; padding: 10px 12px;
-  display: flex; justify-content: space-between; gap: 8px;
+/* To'lov usullari */
+.pay-row { display: flex; gap: 10px; }
+.pay {
+  flex: 1; border: 2px solid var(--line); border-radius: var(--radius-sm);
+  padding: 12px 8px; text-align: center; font-size: 13px; color: var(--ink);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
 }
-.order-item .route { font-weight: 600; }
-.order-item .st { font-size: 12px; color: var(--accent); }
+.pay.active { border-color: var(--yellow); }
+.pay .pic { font-size: 20px; }
 
+/* ===== Tugmalar ===== */
+.btn-primary {
+  display: block; width: calc(100% - 36px); margin: 18px 18px 6px;
+  padding: 17px; border-radius: 16px; font-size: 16px; font-weight: 700;
+  background: linear-gradient(135deg, var(--yellow), var(--yellow-dark)); color: var(--ink);
+  box-shadow: 0 8px 20px rgba(255,179,0,.4);
+}
+.btn-primary:active { transform: translateY(1px); }
+.btn-ghost {
+  display: block; width: calc(100% - 36px); margin: 12px 18px 0;
+  padding: 15px; border-radius: 16px; font-size: 15px; font-weight: 700;
+  background: var(--surface); color: var(--danger);
+}
+.eta-note { text-align: center; color: var(--gray); font-size: 13px; margin: 10px 0; }
+
+/* ===== Haydovchi kartasi ===== */
+.driver-card { display: flex; align-items: center; gap: 14px; }
+.driver-card .av {
+  width: 58px; height: 58px; border-radius: 50%;
+  background: linear-gradient(135deg, #FFD54F, #FFB300); display: grid; place-items: center;
+  font-size: 26px; color: #fff;
+}
+.driver-card .nm { font-size: 18px; font-weight: 700; }
+.driver-card .rate { color: var(--gray); font-size: 14px; }
+.driver-card .rate b { color: var(--ink); }
+.driver-card .call {
+  margin-left: auto; width: 46px; height: 46px; border-radius: 50%;
+  background: var(--surface); display: grid; place-items: center; font-size: 20px;
+}
+.car-info { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.car-info .em { font-size: 26px; }
+.car-info .model { font-weight: 700; }
+.car-info .plate { margin-left: auto; font-weight: 800; letter-spacing: 1px; background: var(--surface); padding: 6px 12px; border-radius: 10px; }
+.actions-2 { display: flex; gap: 12px; margin-top: 16px; }
+.action {
+  flex: 1; background: var(--surface); border-radius: var(--radius-sm); padding: 14px;
+  text-align: center; font-size: 13px; font-weight: 600; color: var(--ink);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.action .ic { font-size: 20px; }
+
+/* ===== Pastki navigatsiya ===== */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--bg); border-top: 1px solid var(--line);
+  display: flex; justify-content: space-around; padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  z-index: 50;
+}
+.nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  font-size: 11px; color: var(--gray); padding: 4px 14px;
+}
+.nav-item .ic { font-size: 20px; }
+.nav-item.active { color: var(--yellow-dark); }
+
+/* Tarix / Buyurtmalar ro'yxati */
+.list { padding: 8px 18px; display: flex; flex-direction: column; gap: 10px; }
+.list-item {
+  background: var(--card); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);
+  padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+}
+.list-item .route { font-weight: 600; font-size: 14px; }
+.list-item .when { font-size: 12px; color: var(--gray); }
+.list-item .st { font-size: 12px; font-weight: 700; color: var(--yellow-dark); }
+.empty { text-align: center; color: var(--gray); padding: 40px 18px; }
+
+/* Toast */
 .toast {
-  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px);
-  background: #222; color: #fff; padding: 12px 18px; border-radius: 24px;
-  font-size: 14px; opacity: 0; transition: all .25s; pointer-events: none; z-index: 100;
+  position: fixed; left: 50%; bottom: 100px; transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 24px;
+  font-size: 14px; opacity: 0; transition: .25s; pointer-events: none; z-index: 100; max-width: 86%;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
