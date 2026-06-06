@@ -9,6 +9,10 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
+      # Python 3.14 da pydantic-core uchun tayyor wheel yo'q (Rust bilan
+      # qurishga urinib build fail bo'ladi). 3.12 ga qadaymiz.
+      - key: PYTHON_VERSION
+        value: "3.12.8"
       - key: BOT_TOKEN
         sync: false
       - key: JWT_SECRET
