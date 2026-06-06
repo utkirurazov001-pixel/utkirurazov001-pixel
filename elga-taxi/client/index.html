@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ELGA TAXI</title>
+  <!-- Telegram Mini App SDK: initData, mavzu, tugmalar -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="logo">🚖 ELGA TAXI</div>
+      <div id="user-badge" class="user-badge"></div>
+    </header>
+
+    <main>
+      <!-- AI ovozli buyurtma -->
+      <section class="card voice-card">
+        <h2>🎙️ Ovozli buyurtma</h2>
+        <p class="hint">Tugmani bosib ushlab turing va ayting:<br>
+          <em>"Chilonzordan aeroportga hozir kerak"</em></p>
+        <button id="mic-btn" class="mic-btn">🎤 Bosib gapiring</button>
+        <div id="voice-status" class="voice-status"></div>
+        <div id="transcript" class="transcript"></div>
+      </section>
+
+      <!-- Buyurtma formasi -->
+      <section class="card">
+        <h2>📝 Buyurtma</h2>
+        <label>Qayerdan
+          <input id="from" type="text" placeholder="Masalan: Chilonzor 9-kvartal" />
+        </label>
+        <label>Qayerga
+          <input id="to" type="text" placeholder="Masalan: Aeroport" />
+        </label>
+        <label>Qachon
+          <input id="when" type="text" placeholder="Hozir / 30 daqiqadan keyin" />
+        </label>
+        <label>Izoh
+          <input id="notes" type="text" placeholder="Qo'shimcha (ixtiyoriy)" />
+        </label>
+        <button id="loc-btn" class="secondary-btn">📍 Joylashuvni aniqlash</button>
+        <button id="submit-btn" class="primary-btn">✅ Buyurtma berish</button>
+      </section>
+
+      <!-- Tariflar -->
+      <section class="card">
+        <h2>💰 Tariflar</h2>
+        <div class="tariffs">
+          <div class="tariff"><span>Ekonom</span><b>15 000</b></div>
+          <div class="tariff"><span>Komfort</span><b>22 000</b></div>
+          <div class="tariff"><span>Biznes</span><b>35 000</b></div>
+        </div>
+      </section>
+
+      <!-- Buyurtmalar tarixi -->
+      <section class="card">
+        <h2>🕓 Buyurtmalarim</h2>
+        <div id="orders" class="orders">Yuklanmoqda…</div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
