@@ -1,0 +1,25 @@
+# Render.com uchun deploy konfiguratsiyasi.
+# Backend + client bitta servisdan tarqatiladi (client statik fayllar
+# FastAPI orqali "/" da xizmat qiladi).
+services:
+  - type: web
+    name: elga-taxi
+    runtime: python
+    rootDir: elga-taxi/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      # Python 3.14 da pydantic-core uchun tayyor wheel yo'q (Rust bilan
+      # qurishga urinib build fail bo'ladi). 3.12 ga qadaymiz.
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: BOT_TOKEN
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ALLOW_BROWSER_DEV
+        value: "0"
+      - key: INITDATA_MAX_AGE
+        value: "86400"
